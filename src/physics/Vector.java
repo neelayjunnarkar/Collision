@@ -1,13 +1,14 @@
 package physics;
 
+import java.awt.geom.Point2D;
+
 /**
  * A 2D Vector in rectangular form.
  *
  * @author Tyler Packard
  */
 public class Vector {
-    private double x = 0;
-    private double y = 0;
+    private Point2D.Double head = new Point2D.Double(0, 0);
 
 
     public Vector() {
@@ -21,50 +22,52 @@ public class Vector {
 
 
     public double getAngle() {
-        return Math.atan2(y, x);
+        return Math.atan2(head.getY(), head.getX());
     }
 
     public void setAngle(double angle) {
-        x = getRadius() * Math.cos(angle);
-        y = getRadius() * Math.sin(angle);
+        head.setLocation(getRadius() * Math.cos(angle), getRadius() * Math.sin(angle));
     }
 
     public double getRadius() {
-        return Math.sqrt(x*x + y*y);
+        return head.distance(0, 0);
     }
 
     public void setRadius(double radius) {
-        x = radius * Math.cos(getAngle());
-        y = radius * Math.sin(getAngle());
+        head.setLocation(radius * Math.cos(getAngle()), radius * Math.sin(getAngle()));
     }
 
     public double getX() {
-        return x;
+        return head.getX();
     }
 
     private void setX(double x) {
-        this.x = x;
+        head.x = x;
     }
 
     public double getY() {
-        return y;
+        return head.getY();
     }
 
     private void setY(double y) {
-        this.y = y;
+        head.y = y;
     }
 
     public static Vector add(Vector v1, Vector v2) {
         Vector sum = new Vector();
-        sum.setX(v1.x + v2.x);
-        sum.setY(v1.y + v2.y);
+        sum.setX(v1.getX() + v2.getX());
+        sum.setY(v1.getY() + v2.getY());
         return sum;
     }
 
     public static Vector subtract(Vector v1, Vector v2) {
         Vector difference = new Vector();
-        difference.setX(v1.x - v2.x);
-        difference.setY(v1.y - v2.y);
+        difference.setX(v1.getX() - v2.getX());
+        difference.setY(v1.getY() - v2.getY());
         return difference;
+    }
+
+    public static double dot(Vector v1, Vector v2) {
+        return v1.getX() * v2.getX() + v1.getY() * v2.getY();
     }
 }
