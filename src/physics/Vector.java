@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
  *
  * @author Tyler Packard
  */
-public class Vector {
+public class Vector implements Cloneable {
     private Point2D.Double head = new Point2D.Double(0, 0);
 
 
@@ -69,5 +69,10 @@ public class Vector {
 
     public static double dot(Vector v1, Vector v2) {
         return v1.getX() * v2.getX() + v1.getY() * v2.getY();
+    }
+
+    @Override
+    public Vector clone() {
+        return new Vector(getX(), getY());
     }
 }
