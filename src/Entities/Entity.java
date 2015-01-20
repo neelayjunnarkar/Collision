@@ -10,14 +10,13 @@ import java.util.HashMap;
  * Entity base class
  *
  * @author Neelay Junnarkar
- * @author Tyler Packard
  */
-public class Entity {
+public abstract class Entity {
     HashMap<String, Vector> forces;
-    Point2D.Double pos = new Point2D.Double();
+    Point2D.Double pos;
 
     public Entity() {
-
+        this(new Point2D.Double(0, 0));
     }
 
     public Entity(Point2D.Double pos) {
@@ -26,10 +25,6 @@ public class Entity {
 
     public Point2D.Double getPos() {
         return (Point2D.Double)pos.clone();
-    }
-
-    public Point2D.Double getPosRef() {
-        return pos;
     }
 
     public void setPos(Point2D.Double pt) {
