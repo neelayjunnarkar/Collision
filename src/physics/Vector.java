@@ -1,14 +1,13 @@
 package physics;
 
 /**
- * A 2D Vector in polar form.
+ * A 2D Vector in rectangular form.
  *
  * @author Tyler Packard
  */
 public class Vector {
-    private double radius = 0;
-
-    private double angle = 0;
+    private double x = 0;
+    private double y = 0;
 
 
     public Vector() {
@@ -16,58 +15,56 @@ public class Vector {
     }
 
     public Vector(double radius, double angle) {
-        this.radius = radius;
-        this.angle = angle;
+        setRadius(radius);
+        setAngle(angle);
     }
 
 
     public double getAngle() {
-        return angle;
+        return Math.atan2(y, x);
     }
 
     public void setAngle(double angle) {
-        this.angle = angle;
+        x = getRadius() * Math.cos(angle);
+        y = getRadius() * Math.sin(angle);
     }
 
     public double getRadius() {
-        return radius;
+        return Math.sqrt(x*x + y*y);
     }
 
     public void setRadius(double radius) {
-        this.radius = radius;
+        x = radius * Math.cos(getAngle());
+        y = radius * Math.sin(getAngle());
     }
 
     public double getX() {
-        return radius * Math.cos(angle);
+        return x;
     }
 
     private void setX(double x) {
-        double y = getY();
-        radius = Math.sqrt(x * x + y * y);
-        angle = Math.tan(y / x);
+        this.x = x;
     }
 
     public double getY() {
-        return radius * Math.sin(angle);
+        return y;
     }
 
     private void setY(double y) {
-        double x = getX();
-        radius = Math.sqrt(x * x + y * y);
-        angle = Math.tan(y / x);
+        this.y = y;
     }
 
     public static Vector add(Vector v1, Vector v2) {
         Vector sum = new Vector();
-        sum.setX(v1.getX() + v2.getX());
-        sum.setY(v1.getY() + v2.getY());
+        sum.setX(v1.x + v2.x);
+        sum.setY(v1.y + v2.y);
         return sum;
     }
 
     public static Vector subtract(Vector v1, Vector v2) {
         Vector difference = new Vector();
-        difference.setX(v1.getX() - v2.getX());
-        difference.setY(v1.getY() - v2.getY());
+        difference.setX(v1.x - v2.x);
+        difference.setY(v1.y - v2.y);
         return difference;
     }
 }
