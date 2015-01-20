@@ -8,12 +8,12 @@ public class Panel extends JPanel {
         Dimension dimension = new Dimension(width, height);
         setLayout(null);
         setPreferredSize(dimension);
+        setBackground(new Color(0xEEEEEE));
     }
 
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(new Color(0x0099FF));
-        g2d.fillRect(0, 0, 640, 480);
     }
 }
