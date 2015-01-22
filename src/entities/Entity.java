@@ -10,6 +10,7 @@ import java.util.HashMap;
  * Entity class
  *
  * @author Neelay Junnarkar
+ * @author Tyler Packard
  */
 public class Entity implements Drawable {
     HashMap<String, Vector> forces = new HashMap<>();
@@ -18,7 +19,7 @@ public class Entity implements Drawable {
     Color color;
 
     public Entity(Polygon shape) {
-        this(shape, new Point2D.Double(0 , 0), new Color(255, 255, 255));
+        this(shape, new Point2D.Double(0 , 0), new Color(0xEEEEEE));
     }
     
     public Entity(Polygon shape, Point2D.Double pos, Color color) {
@@ -44,21 +45,28 @@ public class Entity implements Drawable {
         return (Point2D.Double)pos.clone();
     }
 
+    public Point2D.Double update(double delta) {
+        Vector totalForce = new Vector();
+        for (Vector force : forces.values()) {
+            totalForce.add(force);
+        }
+
+        return move(delta * totalForce.getX(), delta * totalForce.getY());
+    }
+
     public void addForce(String key, Vector force) {
         forces.put(key, force);
     }
 
-    /**
-     * @param key
-     * @return returns the Value that is removed
-     */
     public Vector removeForce(String key) {
         return forces.remove(key).clone();
     }
 
     public void draw(Graphics2D g2d) {
         g2d.setColor(color);
-        g2d.fillPolygon(shape);
-        
+//        g2d.fillPolygon(shape);
+
+        // For testing purposes
+        g2d.fillRect((int) Math.round(pos.getX()), (int) Math.round(pos.getY()), 16, 16);
     }
 }
