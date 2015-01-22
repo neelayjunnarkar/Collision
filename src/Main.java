@@ -1,4 +1,4 @@
-import Entities.Entity;
+import entities.Entity;
 import gui.Panel;
 
 import javax.swing.*;
