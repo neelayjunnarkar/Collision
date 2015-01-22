@@ -1,6 +1,6 @@
 package gui;
 
-import Entities.Entity;
+import entities.Entity;
 
 import javax.swing.*;
 import java.awt.*;
