@@ -10,26 +10,25 @@ import java.util.HashMap;
  * Entity base class
  *
  * @author Neelay Junnarkar
- * @author Tyler Packard
  */
-public class Entity {
+public class Entity implements Drawable {
     HashMap<String, Vector> forces;
     Point2D.Double pos = new Point2D.Double();
+    Polygon shape;
+    Color color;
 
     public Entity() {
-
+        this(new Point2D.Double(0, 0));
     }
 
-    public Entity(Point2D.Double pos) {
+    public Entity(Point2D.Double pos, Polygon shape, Color color) {
         this.pos = pos;
+        this.shape = shape;
+        this.color = color;
     }
 
     public Point2D.Double getPos() {
         return (Point2D.Double)pos.clone();
-    }
-
-    public Point2D.Double getPosRef() {
-        return pos;
     }
 
     public void setPos(Point2D.Double pt) {
@@ -55,5 +54,10 @@ public class Entity {
      */
     public Vector removeForce(String key) {
         return forces.remove(key).clone();
+    }
+
+    public void draw(Graphics2D g2d) {
+        g2d.setColor(color);
+        g2d.fillPolygon(shape);
     }
 }
