@@ -7,7 +7,7 @@ import java.awt.geom.Point2D;
 import java.util.HashMap;
 
 /**
- * Entity base class
+ * Entity class
  *
  * @author Neelay Junnarkar
  */
@@ -17,11 +17,11 @@ public class Entity implements Drawable {
     Polygon shape;
     Color color;
 
-    public Entity() {
-        this(new Point2D.Double(0, 0));
+    public Entity(Polygon shape) {
+        this(shape, new Point2D.Double(0 , 0), new Color(255, 255, 255));
     }
-
-    public Entity(Point2D.Double pos, Polygon shape, Color color) {
+    
+    public Entity(Polygon shape, Point2D.Double pos, Color color) {
         this.pos = pos;
         this.shape = shape;
         this.color = color;
