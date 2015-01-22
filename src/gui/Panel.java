@@ -8,7 +8,7 @@ public class Panel extends JPanel {
         Dimension dimension = new Dimension(width, height);
         setLayout(null);
         setPreferredSize(dimension);
-        setBackground(new Color(0xEEEEEE));
+        setBackground(new Color(0x14181A));
     }
 
     @Override

@@ -9,7 +9,7 @@ import javax.swing.*;
  * @author Neelay Junnarkar
  */
 public class Main {
-    public final static JFrame window = new JFrame("Collision");
+    public final static JFrame window = new JFrame("Space Simulator 2015");
     public final static Panel panel = new Panel(640, 480);
 
     public static void main(String[] args) {

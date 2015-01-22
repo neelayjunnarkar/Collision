@@ -40,7 +40,7 @@ public class Entity {
         pos.setLocation(x, y);
     }
 
-    public Point2D.Double offset(double x, double y) {
+    public Point2D.Double move(double x, double y) {
         pos.setLocation(pos.getX() + x, pos.getY() + y);
         return (Point2D.Double)pos.clone();
     }
