@@ -53,17 +53,25 @@ public class Vector implements Cloneable {
         head.y = y;
     }
 
+    public void add(Vector v) {
+        head.x += v.getX();
+        head.y += v.getY();
+    }
+
     public static Vector add(Vector v1, Vector v2) {
-        Vector sum = new Vector();
-        sum.setX(v1.getX() + v2.getX());
-        sum.setY(v1.getY() + v2.getY());
+        Vector sum = v1.clone();
+        sum.add(v2);
         return sum;
     }
 
+    public void subtract(Vector v) {
+        head.x -= v.getX();
+        head.y -= v.getY();
+    }
+
     public static Vector subtract(Vector v1, Vector v2) {
-        Vector difference = new Vector();
-        difference.setX(v1.getX() - v2.getX());
-        difference.setY(v1.getY() - v2.getY());
+        Vector difference = v1.clone();
+        difference.subtract(v2);
         return difference;
     }
 
