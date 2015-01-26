@@ -3,6 +3,7 @@ import gui.Panel;
 import physics.Vector;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 
 /**
@@ -23,8 +24,9 @@ public class Main {
         window.setResizable(false);
         window.setVisible(true);
         window.setLocationRelativeTo(null);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entities.put("rocket", new Entity(null));
+        entities.put("rocket", new Entity(new Polygon(new int[]{0, 0, 20, 20}, new int[]{0, 16, 16, 0}, 4)));
         entities.get("rocket").addForce("propellant", new Vector(100, Math.PI / 4));
 
         double prevTime = System.nanoTime();

@@ -26,6 +26,17 @@ public class Entity implements Drawable {
         this.pos = pos;
         this.shape = shape;
         this.color = color;
+        
+
+        int x_sum = 0, y_sum = 0;
+        for (int i = 0; i < shape.npoints; ++i) {
+            x_sum += shape.xpoints[i];
+            y_sum += shape.ypoints[i];
+        }
+        Point2D.Double temp_pos = new Point2D.Double(x_sum/shape.npoints, y_sum/shape.npoints);
+        double x_dist = pos.getX()-temp_pos.getX();
+        double y_dist = pos.getY()-temp_pos.getY();
+        shape.translate((int)Math.round(x_dist), (int)Math.round(y_dist));
     }
 
     public Point2D.Double getPos() {
@@ -33,15 +44,17 @@ public class Entity implements Drawable {
     }
 
     public void setPos(Point2D.Double pt) {
-        pos.setLocation(pt.getX(), pt.getY());
+        setPos(pt.getX(), pt.getY());
     }
 
     public void setPos(double x, double y) {
+        shape.translate((int)Math.round(x-pos.getX()), (int)Math.round(y-pos.getY()));
         pos.setLocation(x, y);
     }
 
     public Point2D.Double move(double x, double y) {
         pos.setLocation(pos.getX() + x, pos.getY() + y);
+        setPos(pos.getX(), pos.getY());
         return (Point2D.Double)pos.clone();
     }
 
@@ -50,7 +63,7 @@ public class Entity implements Drawable {
         for (Vector force : forces.values()) {
             totalForce.add(force);
         }
-
+        System.out.println((delta * totalForce.getX())+" "+ (delta * totalForce.getY()));
         return move(delta * totalForce.getX(), delta * totalForce.getY());
     }
 
@@ -64,9 +77,9 @@ public class Entity implements Drawable {
 
     public void draw(Graphics2D g2d) {
         g2d.setColor(color);
-//        g2d.fillPolygon(shape);
-
+        g2d.fillPolygon(shape);
+       // System.out.println("("+pos.getX()+", "+pos.getY()+")         "+shape.getBounds().getX()+", "+shape.getBounds().getY());
         // For testing purposes
-        g2d.fillRect((int) Math.round(pos.getX()), (int) Math.round(pos.getY()), 16, 16);
+       // g2d.fillRect((int) Math.round(pos.getX()), (int) Math.round(pos.getY()), 16, 16);
     }
 }
