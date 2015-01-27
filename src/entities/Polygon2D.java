@@ -10,13 +10,16 @@ import java.awt.geom.Point2D;
  * @author Tyler Packard
  */
 public class Polygon2D {
-    private Point2D.Double[] vertices = new Point2D.Double[0];
-    private int npoints = 0;
-    private Point2D.Double pos = new Point2D.Double(0, 0);
+    Point2D.Double[] vertices;
+    int npoints = 0;
+    Point2D.Double pos = new Point2D.Double(0, 0);
 
 
-    public Polygon2D(Point2D.Double[] vertices, int npoints, Point2D.Double pos) {
-        this.vertices = vertices;
+    public Polygon2D(double[] xPts, double[] yPts, int npoints, Point2D.Double pos) {
+        vertices = new Point2D.Double[npoints];
+        for (int i = 0; i < npoints; ++i) {
+            vertices[i] = new Point2D.Double(xPts[i], yPts[i]);
+        }
         this.npoints = npoints;
         this.pos = pos;
     }
@@ -27,12 +30,13 @@ public class Polygon2D {
         return (Point2D.Double)pos.clone();
     }
 
-    public Point2D.Double setPos(Point2D.Double new_pt) {
-        return setPos(new_pt.getX(), new_pt.getY());
+    public Point2D.Double setPos(Point2D.Double newPt) {
+        return setPos(newPt.getX(), newPt.getY());
     }
 
     public Point2D.Double translate(double x, double y) {
-        return null;
+        pos.setLocation(pos.getX()+x, pos.getY()+y);
+        return (Point2D.Double)pos.clone();
     }
 
     public Polygon approxPoly() {
