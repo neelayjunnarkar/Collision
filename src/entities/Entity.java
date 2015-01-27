@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author Neelay Junnarkar
  * @author Tyler Packard
  */
-public class Entity implements Drawable {
+public class Entity {
     HashMap<String, Vector> forces = new HashMap<>();
     Point2D.Double pos = new Point2D.Double();
     Polygon2D shape;
