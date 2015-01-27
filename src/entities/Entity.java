@@ -12,11 +12,11 @@ import java.util.HashMap;
  * @author Neelay Junnarkar
  * @author Tyler Packard
  */
-public class Entity implements Drawable {
-    HashMap<String, Vector> forces = new HashMap<>();
-    Point2D.Double pos = new Point2D.Double();
-    Polygon shape;
-    Color color;
+public class Entity {
+    private HashMap<String, Vector> forces = new HashMap<>();
+    private Point2D.Double pos = new Point2D.Double();
+    private Polygon shape;
+    private Color color;
 
     public Entity(Polygon shape) {
         this(shape, new Point2D.Double(0 , 0), new Color(0xEEEEEE));

@@ -10,9 +10,9 @@ import java.awt.geom.Point2D;
  * @author Tyler Packard
  */
 public class Polygon2D {
-    Point2D.Double[] vertices = new Point2D.Double[]{};
-    int npoints = 0;
-    Point2D.Double pos = new Point2D.Double(0, 0);
+    private Point2D.Double[] vertices = new Point2D.Double[0];
+    private int npoints = 0;
+    private Point2D.Double pos = new Point2D.Double(0, 0);
 
 
     public Polygon2D(Point2D.Double[] vertices, int npoints, Point2D.Double pos) {

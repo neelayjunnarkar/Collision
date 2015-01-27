@@ -11,9 +11,7 @@ public class Vector implements Cloneable {
     private Point2D.Double head = new Point2D.Double(0, 0);
 
 
-    public Vector() {
-
-    }
+    public Vector() {}
 
     public Vector(double radius, double angle) {
         setRadius(radius);
