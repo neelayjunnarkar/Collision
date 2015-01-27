@@ -52,7 +52,6 @@ public class Entity {
         for (Vector force : forces.values()) {
             totalForce.add(force);
         }
-        System.out.println((delta * totalForce.getX())+" "+ (delta * totalForce.getY()));
         return move(delta * totalForce.getX(), delta * totalForce.getY());
     }
 
@@ -67,8 +66,5 @@ public class Entity {
     public void draw(Graphics2D g2d) {
         g2d.setColor(color);
         shape.draw(g2d);
-       // System.out.println("("+pos.getX()+", "+pos.getY()+")         "+shape.getBounds().getX()+", "+shape.getBounds().getY());
-        // For testing purposes
-       // g2d.fillRect((int) Math.round(pos.getX()), (int) Math.round(pos.getY()), 16, 16);
     }
 }
