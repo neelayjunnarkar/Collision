@@ -27,7 +27,7 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entities.put("rocket", new Entity(new Polygon2D(new double[]{0, 0, 30, 20}, new double[]{0, 20, 20, 0}, 4,
+        entities.put("rocket", new Entity(new Polygon2D(new double[]{0, 0, 22, 20}, new double[]{0, 20, 22, 0}, 4,
                 new Point2D.Double(100, 100))));
         entities.get("rocket").addForce("propellant", new Vector(100, Math.PI / 4));
 

@@ -13,10 +13,10 @@ import java.util.HashMap;
  * @author Tyler Packard
  */
 public class Entity {
-    HashMap<String, Vector> forces = new HashMap<>();
-    Point2D.Double pos = new Point2D.Double();
-    Polygon2D shape;
-    Color color = new Color(0xEEEEEE);
+    private HashMap<String, Vector> forces = new HashMap<>();
+    private Point2D.Double pos = new Point2D.Double();
+    private Polygon2D shape;
+    private Color color = new Color(0xEEEEEE);
 
     public Entity(Polygon2D shape) {
         this(shape, new Point2D.Double(0 , 0));
