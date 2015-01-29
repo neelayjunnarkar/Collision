@@ -18,6 +18,11 @@ public class Vector implements Cloneable {
         setAngle(angle);
     }
 
+    public Vector(Point2D.Double base, Point2D.Double head) {
+        this.head.x = head.getX() - base.getX();
+        this.head.y = head.getY() - base.getY();
+    }
+
 
     public double getAngle() {
         return Math.atan2(head.getY(), head.getX());
@@ -25,6 +30,11 @@ public class Vector implements Cloneable {
 
     public void setAngle(double angle) {
         head.setLocation(getRadius() * Math.cos(angle), getRadius() * Math.sin(angle));
+    }
+
+    public void rotate(double angle) {
+        double newAngle = getAngle() + angle;
+        head.setLocation(getRadius() * Math.cos(newAngle), getRadius() * Math.sin(newAngle));
     }
 
     public double getRadius() {

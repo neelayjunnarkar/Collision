@@ -14,7 +14,7 @@ import java.util.*;
  * @author Neelay Junnarkar
  */
 public class Main {
-    public final static JFrame window = new JFrame("Space Simulator 2015");
+    public final static JFrame window = new JFrame("Space Simulator 2016");
     public final static Panel panel = new Panel(640, 480);
 
     public final static HashMap<String, Entity> entities = new HashMap<>();
@@ -27,9 +27,8 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entities.put("rocket", new Entity(new Polygon2D(new double[]{0, 0, 22, 20}, new double[]{0, 20, 22, 0}, 4,
-                new Point2D.Double(100, 100))));
-        entities.get("rocket").addForce("propellant", new Vector(100, Math.PI / 4));
+        entities.put("rocket", new Entity(new Polygon2D(new double[]{0, 0, 20, 20}, new double[]{0, 20, 20, 0}, 4)));
+//        entities.get("rocket").addForce("propellant", new Vector(100, Math.PI / 4));
 
         double prevTime = System.nanoTime();
         while (true) {
