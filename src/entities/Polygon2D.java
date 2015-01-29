@@ -14,6 +14,10 @@ public class Polygon2D {
     private Point2D.Double pos = new Point2D.Double(0, 0);
 
 
+    public Polygon2D(double[] xPts, double[] yPts, int npoints) {
+        this(xPts, yPts, npoints, new Point2D.Double(0, 0));
+        
+    }
     public Polygon2D(double[] xPts, double[] yPts, int npoints, Point2D.Double pos) {
         vertices = new Point2D.Double[npoints];
         for (int i = 0; i < npoints; ++i) {
@@ -21,7 +25,6 @@ public class Polygon2D {
         }
         this.pos = pos;
     }
-
 
     public Point2D.Double setPos(double x, double y) {
         pos.setLocation(x, y);
