@@ -1,5 +1,6 @@
 package entities;
 
+import physics.Axis;
 import physics.Vector;
 
 import java.awt.*;
@@ -14,9 +15,6 @@ import java.awt.geom.Point2D;
 public class Polygon2D {
     private Point2D.Double[] vertices;
     private Point2D.Double pos = new Point2D.Double(0, 0);
-
-    private double[] sepAxes;
-
 
     /**
      * POINTS MUST BE IN COUNTER-CLOCKWISE ORDER
@@ -43,21 +41,6 @@ public class Polygon2D {
             vertices[i] = new Point2D.Double(xPts[i], yPts[i]);
         }
         this.pos = pos;
-
-        genSepAxes();
-    }
-
-    private void genSepAxes() {
-        sepAxes = new double[vertices.length];
-        for (int i = 0; i < vertices.length; i++) {
-            Point2D.Double v1 = vertices[i];
-            Point2D.Double v2 = vertices[(i+1)%vertices.length];
-
-            Vector side = new Vector(v1, v2);
-            side.rotate(Math.PI / 2);
-
-            sepAxes[i] = side.getAngle();
-        }
     }
 
     public Point2D.Double setPos(double x, double y) {
@@ -69,9 +52,17 @@ public class Polygon2D {
         return setPos(newPt.getX(), newPt.getY());
     }
 
-    public Point2D.Double translate(double x, double y) {
+    public Point2D.Double getPos() {
+        return pos;
+    }
+
+    public Point2D.Double move(double x, double y) {
         pos.setLocation(pos.getX()+x, pos.getY()+y);
         return (Point2D.Double)pos.clone();
+    }
+
+    public Point2D.Double[] getVertices() {
+        return vertices;
     }
 
     public Polygon approxPoly() {

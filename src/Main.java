@@ -27,8 +27,11 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entities.put("rocket", new Entity(new Polygon2D(new double[]{0, 0, 20, 20}, new double[]{0, 20, 20, 0}, 4)));
-//        entities.get("rocket").addForce("propellant", new Vector(100, Math.PI / 4));
+        entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}, 4)));
+        entities.get("asteroid 1").addForce("propellant", new Vector(100, Math.PI / 4));
+
+        entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0}, 3)));
+        entities.get("asteroid 2").setPos(100, 100);
 
         double prevTime = System.nanoTime();
         while (true) {
@@ -51,6 +54,10 @@ public class Main {
         double delta = nanoDelta / 1_000_000_000.0;
         for (Entity entity : entities.values()) {
             entity.update(delta);
+        }
+
+        if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
+            entities.get("asteroid 1").removeForce("propellant");
         }
     }
 }

@@ -13,9 +13,13 @@ public class Vector implements Cloneable {
 
     public Vector() {}
 
-    public Vector(double radius, double angle) {
-        setRadius(radius);
+    public Vector(double magnitude, double angle) {
+        setMagnitude(magnitude);
         setAngle(angle);
+    }
+
+    public Vector(Point2D.Double head) {
+        this.head.setLocation(head.getX(), head.getY());
     }
 
     public Vector(Point2D.Double base, Point2D.Double head) {
@@ -25,24 +29,23 @@ public class Vector implements Cloneable {
 
 
     public double getAngle() {
-        return Math.atan2(head.getY(), head.getX());
+        return Math.atan2(head.getY(), head.getX()) % (2 * Math.PI);
     }
 
     public void setAngle(double angle) {
-        head.setLocation(getRadius() * Math.cos(angle), getRadius() * Math.sin(angle));
+        head.setLocation(getMagnitude() * Math.cos(angle), getMagnitude() * Math.sin(angle));
     }
 
     public void rotate(double angle) {
-        double newAngle = getAngle() + angle;
-        head.setLocation(getRadius() * Math.cos(newAngle), getRadius() * Math.sin(newAngle));
+        setAngle(getAngle() + angle);
     }
 
-    public double getRadius() {
+    public double getMagnitude() {
         return head.distance(0, 0);
     }
 
-    public void setRadius(double radius) {
-        head.setLocation(radius * Math.cos(getAngle()), radius * Math.sin(getAngle()));
+    public void setMagnitude(double magnitude) {
+        head.setLocation(magnitude * Math.cos(getAngle()), magnitude * Math.sin(getAngle()));
     }
 
     public double getX() {
@@ -87,8 +90,25 @@ public class Vector implements Cloneable {
         return v1.getX() * v2.getX() + v1.getY() * v2.getY();
     }
 
+    public void normalize() {
+        head.x /= getMagnitude();
+        head.y /= getMagnitude();
+    }
+
+    public Vector normal() {
+        Vector normal = new Vector();
+        normal.setX(-head.getY());
+        normal.setY(head.getX());
+        return normal;
+    }
+
     @Override
     public Vector clone() {
-        return new Vector(getX(), getY());
+        return new Vector(new Point2D.Double(getX(), getY()));
+    }
+
+    @Override
+    public String toString() {
+        return "<" + head.getX() + ", " + head.getY() + ">";
     }
 }
