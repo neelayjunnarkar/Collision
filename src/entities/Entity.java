@@ -2,6 +2,7 @@ package entities;
 
 import physics.Axis;
 import physics.Vector;
+import physics.Force;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -14,21 +15,24 @@ import java.util.HashMap;
  * @author Tyler Packard
  */
 public class Entity {
-    private HashMap<String, Vector> forces = new HashMap<>();
+    
+    private HashMap<String, Force> forces = new HashMap<>();
     private Point2D.Double pos = new Point2D.Double();
     private Polygon2D shape;
     private Color color = new Color(0xEEEEEE);
     private Axis[] sepAxes;
-
+    double mass;
+    Vector velocity;
+    
     public Entity(Polygon2D shape) {
-        this(shape, new Point2D.Double(0 , 0));
+        this(shape, new Point2D.Double(0 , 0), 0);
     }
     
-    public Entity(Polygon2D shape, Point2D.Double pos) {
+    public Entity(Polygon2D shape, Point2D.Double pos, double mass) {
         this.pos = pos;
         this.shape = shape;
         shape.setPos(pos);
-
+        this.mass = mass;
         genSepAxes();
     }
 
@@ -64,11 +68,15 @@ public class Entity {
     }
 
     public Point2D.Double update(double delta) {
-        Vector totalForce = new Vector();
-        for (Vector force : forces.values()) {
-            totalForce.add(force);
+        Vector totalVelocityDelta = new Vector();
+        for (Force force : forces.values()) {
+            totalVelocityDelta.add(new Vector()) //add x and y accelerations to totalVelocityDeta, a2 = (m1*a1)/m2
         }
-        return move(delta * totalForce.getX(), delta * totalForce.getY());
+//        Vector totalForce = new Vector();
+//        for (Vector force : forces.values()) {
+//            totalForce.add(force);
+//        }
+//        return move(delta * totalForce.getX(), delta * totalForce.getY());
     }
 
     public void addForce(String key, Vector force) {
