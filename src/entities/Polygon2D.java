@@ -1,8 +1,5 @@
 package entities;
 
-import physics.Axis;
-import physics.Vector;
-
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -19,26 +16,25 @@ public class Polygon2D {
     /**
      * POINTS MUST BE IN COUNTER-CLOCKWISE ORDER
      *
-     * @param xPts The x-points of the polygon
-     * @param yPts The y-points of the polygon
-     * @param npoints The number of points in the polygon
+     * @param xPoints The x-points of the polygon
+     * @param yPoints The y-points of the polygon
      */
-    public Polygon2D(double[] xPts, double[] yPts, int npoints) {
-        this(xPts, yPts, npoints, new Point2D.Double(0, 0));
-        
+    public Polygon2D(double[] xPoints, double[] yPoints) {
+        this(xPoints, yPoints, new Point2D.Double(0, 0));
     }
 
     /**
      * POINTS MUST BE IN COUNTER-CLOCKWISE ORDER
      *
-     * @param xPts The x-points of the polygon
-     * @param yPts The y-points of the polygon
-     * @param npoints The number of points in the polygon
+     * @param xPoints The x-points of the polygon
+     * @param yPoints The y-points of the polygon
+     * @param pos The position of the polygon
      */
-    public Polygon2D(double[] xPts, double[] yPts, int npoints, Point2D.Double pos) {
-        vertices = new Point2D.Double[npoints];
-        for (int i = 0; i < npoints; ++i) {
-            vertices[i] = new Point2D.Double(xPts[i], yPts[i]);
+    public Polygon2D(double[] xPoints, double[] yPoints, Point2D.Double pos) {
+        int numPoints = Math.min(xPoints.length, yPoints.length);
+        vertices = new Point2D.Double[numPoints];
+        for (int i = 0; i < numPoints; ++i) {
+            vertices[i] = new Point2D.Double(xPoints[i], yPoints[i]);
         }
         this.pos = pos;
     }

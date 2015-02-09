@@ -4,11 +4,13 @@ import gui.Panel;
 import physics.Vector;
 
 import javax.swing.*;
-import java.awt.geom.Point2D;
 import java.util.*;
 
-/**
- * A pro physics simulator.
+/**   ______ ______ ___    ______ ______      ______ ___ _______ ______ ___    ___  ________ ______ ______      ______ ______ ___ ______
+ *   /  ___//  _  //   |  /  ___//  ___/     /  ___//  //   /  //  /  //  /   /   |/__   __//     //  _  /     /___  //     //  //  ___/
+ *  /___  //  ___//  _ | /  /__ /  ___/     /___  //  //      //  /  //  /__ /  _ |  /  /  /  /  //    _/     /  ___//  /  //  //  _  /
+ * /_____//__/   /__/__|/_____//_____/     /_____//__//__/_/_//_____//_____//__/__| /__/  /_____//__/__\     /_____//_____//__//_____/
+ * A pro space simulator.
  *
  * @author Tyler Packard
  * @author Neelay Junnarkar
@@ -27,11 +29,11 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}, 4)));
-        entities.get("asteroid 1").addForce("propellant", new Vector(100, Math.PI / 4));
+        entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 15, 30}, new double[]{0, 20, 0})));
+        entities.get("asteroid 1").addForce("propellant", new Vector(100, Math.PI / 2));
 
-        entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0}, 3)));
-        entities.get("asteroid 2").setPos(100, 100);
+        entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30, 15, 0}, new double[]{20, 20, 0, 10, 0})));
+        entities.get("asteroid 2").setPos(0, 100);
 
         double prevTime = System.nanoTime();
         while (true) {
