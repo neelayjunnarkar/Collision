@@ -1,6 +1,7 @@
 import entities.Entity;
 import entities.Polygon2D;
 import gui.Panel;
+import physics.Force;
 import physics.Vector;
 
 import javax.swing.*;
@@ -27,8 +28,9 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}, 4)));
-        entities.get("asteroid 1").addForce("propellant", new Vector(100, Math.PI / 4));
+        entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}, 4),
+                                              new Point2D.Double(0, 0), 100000));
+        entities.get("asteroid 1").addForce("propellant", new Force(1, new Vector(100, Math.PI / 4)));
 
         entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0}, 3)));
         entities.get("asteroid 2").setPos(100, 100);
@@ -56,8 +58,14 @@ public class Main {
             entity.update(delta);
         }
 
-        if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
-            entities.get("asteroid 1").removeForce("propellant");
-        }
+        //NULL POINTER EXCEPTIONS
+//        if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
+//            Force temp = new Force(entities.get("asteroid 1").removeForce("propellant").clone());
+//
+//            if (temp != null) {
+//                Force addforce = new Force(temp.getMass(), new Vector(temp.getAcceleration().getMagnitude(), temp.getAcceleration().getAngle() + Math.PI / 2.0));
+//                entities.get("asteroid 1").addForce("reversifier 10 000", addforce);
+//            }
+//        }
     }
 }

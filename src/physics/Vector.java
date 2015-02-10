@@ -52,7 +52,7 @@ public class Vector implements Cloneable {
         return head.getX();
     }
 
-    private void setX(double x) {
+    public void setX(double x) {
         head.x = x;
     }
 
@@ -60,7 +60,7 @@ public class Vector implements Cloneable {
         return head.getY();
     }
 
-    private void setY(double y) {
+    public void setY(double y) {
         head.y = y;
     }
 

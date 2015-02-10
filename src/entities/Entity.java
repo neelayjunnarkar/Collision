@@ -33,6 +33,7 @@ public class Entity {
         this.shape = shape;
         shape.setPos(pos);
         this.mass = mass;
+        velocity = new Vector();
         genSepAxes();
     }
 
@@ -70,21 +71,22 @@ public class Entity {
     public Point2D.Double update(double delta) {
         Vector totalVelocityDelta = new Vector();
         for (Force force : forces.values()) {
-            totalVelocityDelta.add(new Vector()) //add x and y accelerations to totalVelocityDeta, a2 = (m1*a1)/m2
+            Vector deltap = new Vector((force.getMass()/mass)*Math.sqrt(Math.pow(force.getAcceleration().getX(), 2.0) + Math.pow(force.getAcceleration().getY(), 2)),
+                    force.getAcceleration().getAngle());
+
+            totalVelocityDelta.add(deltap);//add x and y accelerations to totalVelocityDeta, a2 = (m1*a1)/m2, where m1 and a1 are of force, and a2 is being found for this entity
         }
-//        Vector totalForce = new Vector();
-//        for (Vector force : forces.values()) {
-//            totalForce.add(force);
-//        }
-//        return move(delta * totalForce.getX(), delta * totalForce.getY());
+
+        velocity = Vector.add(velocity, totalVelocityDelta);
+        return move(delta * velocity.getX(), delta * velocity.getY());
     }
 
-    public void addForce(String key, Vector force) {
+    public void addForce(String key, Force force) {
         forces.put(key, force);
     }
 
-    public boolean removeForce(String key) {
-        return forces.remove(key) != null;
+    public Force removeForce(String key) {
+        return forces.remove(key).clone();
     }
 
     private boolean inRange(double point, double[] range) {
