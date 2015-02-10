@@ -7,6 +7,7 @@ import physics.Vector;
 import javax.swing.*;
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.regex.Matcher;
 
 /**
  * A pro physics simulator.
@@ -29,8 +30,8 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}, 4),
-                                              new Point2D.Double(0, 0), 100000));
-        entities.get("asteroid 1").addForce("propellant", new Force(1, new Vector(100, Math.PI / 4)));
+                                              new Point2D.Double(0, 0), 100));
+   //     entities.get("asteroid 1").addConstantForce("a", new Force(1, new Vector(.01, Math.PI / 4.0)));
 
         entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0}, 3)));
         entities.get("asteroid 2").setPos(100, 100);
@@ -58,14 +59,8 @@ public class Main {
             entity.update(delta);
         }
 
-        //NULL POINTER EXCEPTIONS
 //        if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
-//            Force temp = new Force(entities.get("asteroid 1").removeForce("propellant").clone());
 //
-//            if (temp != null) {
-//                Force addforce = new Force(temp.getMass(), new Vector(temp.getAcceleration().getMagnitude(), temp.getAcceleration().getAngle() + Math.PI / 2.0));
-//                entities.get("asteroid 1").addForce("reversifier 10 000", addforce);
-//            }
 //        }
     }
 }

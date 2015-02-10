@@ -6,6 +6,7 @@ import physics.Force;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.beans.VetoableChangeListener;
 import java.util.HashMap;
 
 /**
@@ -78,15 +79,25 @@ public class Entity {
         }
 
         velocity = Vector.add(velocity, totalVelocityDelta);
+        //System.out.println(velocity.getX()+" "+velocity.getY());
         return move(delta * velocity.getX(), delta * velocity.getY());
     }
 
-    public void addForce(String key, Force force) {
+    public void addConstantForce(String key, Force force) {
         forces.put(key, force);
+    }
+    
+    public void addForce(Force force) {
+        Vector acceleration = new Vector((force.getMass()/mass)*Math.sqrt(Math.pow(force.getAcceleration().getX(), 2.0) + Math.pow(force.getAcceleration().getY(), 2.0)),
+                force.getAcceleration().getAngle());
+        
+        velocity = Vector.add(velocity, acceleration);
+        System.out.println(velocity.getX()+" "+velocity.getY());
+
     }
 
     public Force removeForce(String key) {
-        return forces.remove(key).clone();
+        return forces.remove(key);
     }
 
     private boolean inRange(double point, double[] range) {
