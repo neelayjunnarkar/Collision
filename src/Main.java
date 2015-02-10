@@ -5,12 +5,13 @@ import physics.Force;
 import physics.Vector;
 
 import javax.swing.*;
-import java.awt.geom.Point2D;
 import java.util.*;
-import java.util.regex.Matcher;
 
-/**
- * A pro physics simulator.
+/**   ______ ______ ___    ______ ______      ______ ___ _______ ______ ___    ___  ________ ______ ______      ______ ______ ___ ______
+ *   /  ___//  _  //   |  /  ___//  ___/     /  ___//  //   /  //  /  //  /   /   |/__   __//     //  _  /     /___  //     //  //  ___/
+ *  /___  //  ___//  _ | /  /__ /  ___/     /___  //  //      //  /  //  /__ /  _ |  /  /  /  /  //    _/     /  ___//  /  //  //  _  /
+ * /_____//__/   /__/__|/_____//_____/     /_____//__//__/_/_//_____//_____//__/__| /__/  /_____//__/__\     /_____//_____//__//_____/
+ * A pro space simulator.
  *
  * @author Tyler Packard
  * @author Neelay Junnarkar
@@ -59,8 +60,8 @@ public class Main {
             entity.update(delta);
         }
 
-//        if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
-//
-//        }
+        if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
+            entities.get("asteroid 1").removeForce("propellant");
+        }
     }
 }
