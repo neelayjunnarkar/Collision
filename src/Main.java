@@ -5,6 +5,7 @@ import physics.Force;
 import physics.Vector;
 
 import javax.swing.*;
+import java.awt.geom.Point2D;
 import java.util.*;
 
 /**   ______ ______ ___    ______ ______      ______ ___ _______ ______ ___    ___  ________ ______ ______      ______ ______ ___ ______
@@ -30,11 +31,11 @@ public class Main {
         window.setLocationRelativeTo(null);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}, 4),
+        entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}),
                                               new Point2D.Double(0, 0), 100));
         entities.get("asteroid 1").addConstantForce("a", new Force(1, new Vector(.01, Math.PI / 4.0)));
 
-        entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0}, 3)));
+        entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0})));
         entities.get("asteroid 2").setPos(100, 100);
 
         double prevTime = System.nanoTime();
