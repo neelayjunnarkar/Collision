@@ -103,7 +103,8 @@ public class Main {
         }
 
         if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
-            entities.get("asteroid 1").removeForce("propellant");
+            Vector vec = entities.get("asteroid 1").getVelocity().reject(entities.get("asteroid 2").getVelocity());
+
         }
     }
 }

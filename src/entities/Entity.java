@@ -22,6 +22,15 @@ public class Entity {
     private Color color = new Color(0xEEEEEE);
     private Axis[] sepAxes;
     private double mass;
+
+    public Vector getVelocity() {
+        return velocity;
+    }
+
+    public HashMap<String, Force> getForces() {
+        return forces;
+    }
+
     private Vector velocity;
     private double slowDownDist = 0.01;
     
