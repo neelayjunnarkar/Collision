@@ -5,12 +5,12 @@ import java.awt.geom.Point2D;
 /**
  * A 2D Vector in rectangular form.
  *
+ * @author Neelay Junnarkar
  * @author Tyler Packard
  */
 public class Vector implements Cloneable {
     private Point2D.Double head = new Point2D.Double(0, 0);
-
-
+    
     public Vector() {}
 
     public Vector(double magnitude, double angle) {
@@ -43,7 +43,7 @@ public class Vector implements Cloneable {
     public double getMagnitude() {
         return head.distance(0, 0);
     }
-
+    
     public void setMagnitude(double magnitude) {
         head.setLocation(magnitude * Math.cos(getAngle()), magnitude * Math.sin(getAngle()));
     }
@@ -102,6 +102,19 @@ public class Vector implements Cloneable {
         return normal;
     }
 
+    public Vector project(Vector v2) {
+        double projX = (dot(this, v2)/(v2.getX()*v2.getX() + v2.getY()*v2.getY()))*v2.getX();
+        double projY = (dot(this, v2)/(v2.getX()*v2.getX() + v2.getY()*v2.getY()))*v2.getY();
+        Vector projection = new Vector(Math.sqrt(projX*projX + projY*projY), Math.atan(projY/projX));
+        return projection;
+    }
+    
+    public Vector reject(Vector v2) {
+        Vector projection = project(v2);
+        Vector rejection = new Vector(Math.sqrt(getMagnitude()*getMagnitude()-projection.getMagnitude()*projection.getMagnitude()), projection.getAngle()-Math.acos(projection.getMagnitude()/getMagnitude()));
+        return rejection;
+    }
+    
     @Override
     public Vector clone() {
         return new Vector(new Point2D.Double(getX(), getY()));

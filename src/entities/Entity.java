@@ -6,7 +6,6 @@ import physics.Force;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
-import java.beans.VetoableChangeListener;
 import java.util.HashMap;
 
 /**
@@ -22,8 +21,9 @@ public class Entity {
     private Polygon2D shape;
     private Color color = new Color(0xEEEEEE);
     private Axis[] sepAxes;
-    double mass;
-    Vector velocity;
+    private double mass;
+    private Vector velocity;
+    private double slowDownDist = 0.01;
     
     public Entity(Polygon2D shape) {
         this(shape, new Point2D.Double(0 , 0), 0);

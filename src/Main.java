@@ -33,10 +33,19 @@ public class Main {
 
         entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}),
                                               new Point2D.Double(0, 0), 100));
-        entities.get("asteroid 1").addConstantForce("a", new Force(1, new Vector(.01, Math.PI / 4.0)));
+        entities.get("asteroid 1").addForce(new Force(100, new Vector(100, Math.PI / 4.0)));
 
         entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0})));
         entities.get("asteroid 2").setPos(100, 100);
+//        Vector axis = new Vector(1, Math.PI/4.0);
+//        Vector other = new Vector(2, Math.PI/3.0);
+//        Vector projection = other.project(axis);
+//        Vector rejection = other.reject(axis);
+//
+//        System.out.println("axis: "+axis.getMagnitude()+" "+axis.getAngle());
+//        System.out.println("other: "+other.getMagnitude()+" "+other.getAngle());
+//        System.out.println("projection: "+projection.getMagnitude()+" "+projection.getAngle());
+//        System.out.println("rejection: "+rejection.getMagnitude()+" "+rejection.getAngle());
 
         double prevTime = System.nanoTime();
         while (true) {
