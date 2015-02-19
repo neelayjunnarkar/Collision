@@ -40,7 +40,7 @@ public class Main {
 
         entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}),
                                               new Point2D.Double(100, 100), 100));
-        entities.get("asteroid 1").addForce(new Force(100, new Vector(100, 2.094)));
+      //  entities.get("asteroid 1").addForce(new Force(100, new Vector(100, 2.094)));
 
         entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0})));
         entities.get("asteroid 2").setPos(100, 100);
@@ -100,17 +100,18 @@ public class Main {
        }
         }
 
-        if (keyboard.keyDown("→")) {
-            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, 0)));
-        }
-        if (keyboard.keyDown("↓")) {
-            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI * 0.5)));
-        }
-        if (keyboard.keyDown("←")) {
-            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI)));
-        }
-        if (keyboard.keyDown("↑")) {
-            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI * 1.5)));
-        }
-    }
+//        if (keyboard.keyDown("→")) {
+//            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, 0)));
+//        }
+//        if (keyboard.keyDown("↓")) {
+//            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI * 0.5)));
+//        }
+//        if (keyboard.keyDown("←")) {
+//            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI)));
+//        }
+//        if (keyboard.keyDown("↑")) {
+//            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI * 1.5)));
+      //  }
+//    }
 }
+
