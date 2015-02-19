@@ -33,7 +33,12 @@ public class Vector implements Cloneable {
     }
 
     public void setAngle(double angle) {
-        head.setLocation(getMagnitude() * Math.cos(angle), getMagnitude() * Math.sin(angle));
+        double cos = Math.cos(angle);
+        double sin = Math.sin(angle);
+        double x = head.x;
+        double y = head.y;
+        head.x = x * cos - y * sin;
+        head.y = y * cos + x * sin;
     }
 
     public void rotate(double angle) {

@@ -1,8 +1,5 @@
 package physics;
 
-/**
- * Created by 95028672 on 2/9/2015.
- */
 public class Force implements Cloneable {
     private double mass;
     private Vector acceleration;

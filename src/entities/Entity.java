@@ -35,7 +35,7 @@ public class Entity {
     private double slowDownDist = 0.01;
     
     public Entity(Polygon2D shape) {
-        this(shape, new Point2D.Double(0 , 0), 0);
+        this(shape, new Point2D.Double(0 , 0), 1);
     }
     
     public Entity(Polygon2D shape, Point2D.Double pos, double mass) {
@@ -97,12 +97,11 @@ public class Entity {
     }
     
     public void addForce(Force force) {
-        Vector acceleration = new Vector((force.getMass()/mass)*Math.sqrt(Math.pow(force.getAcceleration().getX(), 2.0) + Math.pow(force.getAcceleration().getY(), 2.0)),
-                force.getAcceleration().getAngle());
-        
-        velocity = Vector.add(velocity, acceleration);
-        System.out.println(velocity.getX()+" "+velocity.getY());
+        Vector acceleration = new Vector((force.getMass()/mass)*Math.sqrt(Math.pow(force.getAcceleration().getX(), 2.0)
+                + Math.pow(force.getAcceleration().getY(), 2.0)), force.getAcceleration().getAngle());
 
+        velocity = Vector.add(velocity, acceleration);
+        System.out.println(velocity.getX() + ", " + velocity.getY());
     }
 
     public Force removeForce(String key) {
