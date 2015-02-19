@@ -1,6 +1,8 @@
 import entities.Entity;
 import entities.Polygon2D;
 import gui.Panel;
+import gui.input.Keyboard;
+import gui.input.Mouse;
 import physics.Force;
 import physics.Vector;
 
@@ -8,50 +10,23 @@ import javax.swing.*;
 import java.awt.geom.Point2D;
 import java.util.*;
 
-/**
- *               ████████████████████
- *             ████████████████████████
- *           ████████████████████████████
- *           ████████████████████████████
- *         ████████████████████████████████
- *         ██████░░██████░░░░████░░████████
- *         ████░░░░░░░░░░░░░░░░░░░░░░░░████
- *         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
- *         ██████████░░░░██████████░░░░░░██
- *         ██  ▓▓  ████████  ▓▓  ██████████
- *         ██████████░░░░██████████░░░░░░░░
- *         ░░░░░░░░░░▒▒▒▒░░░░░░░░░░░░░░░░░░
- *         ░░░░░░░░░░▒▒░░░░░░░░░░░░░░░░░░
- *         ░░░░░░░░░░░░░░░░░░░░░░░░░░░░
- *           ░░░░░░▒▒▒▒▒▒▒▒░░░░░░░░░░░░
- *           ░░░░░░░░▒▒▒▒░░░░░░░░░░░░
- *             ░░░░░░░░░░░░░░░░░░░░▒▒
- *             ░░░░░░░░░░░░░░░░░░▒▒▒▒
- *               ░░░░░░░░░░░░▒▒▒▒▒▒▒▒
- *             ▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓
- *         ▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓
- *     ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
- *   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
- *   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
- * ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
- * ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
- * ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+/**░░▒▒▓▓██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▓▓▒▒░░
  *    ______ ______ ___    ______ ______      ______ ___ _______ ______ ___    ___  ________ ______ ______      ______ ______ ___ ______
  *   /  ___//  _  //   |  /  ___//  ___/     /  ___//  //   /  //  /  //  /   /   |/__   __//     //  _  /     /___  //     //  //  ___/
  *  /___  //  ___//  _ | /  /__ /  ___/     /___  //  //      //  /  //  /__ /  _ |  /  /  /  /  //    _/     /  ___//  /  //  //  _  /
  * /_____//__/   /__/__|/_____//_____/     /_____//__//__/_/_//_____//_____//__/__| /__/  /_____//__/__\     /_____//_____//__//_____/
- *              ________ ___ ________ ___  ___      ______ ___  ___ ___    ___ ______ ______ ___
- *             |  / /  //  //__   __//  /_/  /     /  ___//  /_/  //   |  /  //  _  //  ___//  /
- *  __  __  __ |      //  /   /  /  /  __   /     /  /__ /  __   //  _ | /  //    _//___  //__/
- * /_/ /_/ /_/ |__/__//__/   /__/  /__/ /__/     /_____//__/ /__//__/__|/__//__/__\/_____//__/
+ *
+ * ░░▒▒▓▓██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▓▓▒▒░░
  * A pro space simulator.
-
+ *
  * @author Tyler Packard
  * @author Neelay Junnarkar
  */
 public class Main {
     public final static JFrame window = new JFrame("Space Simulator 2016");
     public final static Panel panel = new Panel(640, 480);
+    public final static Keyboard keyboard = new Keyboard(panel);
+    public final static Mouse mouse = new Mouse(panel);
 
     public final static HashMap<String, Entity> entities = new HashMap<>();
 
@@ -64,13 +39,11 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}),
-                                              new Point2D.Double(0, 0), 100));
-        entities.get("asteroid 1").addVelocity("propellant", new Vector(100, Math.PI/4.0));
+                                              new Point2D.Double(100, 100), 100));
+        entities.get("asteroid 1").addForce(new Force(100, new Vector(100, 2.094)));
 
         entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0})));
         entities.get("asteroid 2").setPos(100, 100);
-        System.out.println(entities.get("asteroid 2").getVelocity() + " " + entities.get("asteroid 2").getMass());
-
 
 //        Vector axis = new Vector(1, Math.PI/6.0);
 //        Vector other = new Vector(1, Math.PI/3.0);
@@ -125,5 +98,19 @@ public class Main {
            entities.get("asteroid 1").addVelocity("rejection", new Vector(vaf-vai, Math.PI + rejection.getAngle()));
            entities.get("asteroid 2").addVelocity("veocity", new Vector(vbf-vbi, rejection.getAngle()));
        }
+        }
+
+        if (keyboard.keyDown("→")) {
+            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, 0)));
+        }
+        if (keyboard.keyDown("↓")) {
+            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI * 0.5)));
+        }
+        if (keyboard.keyDown("←")) {
+            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI)));
+        }
+        if (keyboard.keyDown("↑")) {
+            entities.get("SPACESHIP!").addForce(new Force(1, new Vector(0.1, Math.PI * 1.5)));
+        }
     }
 }
