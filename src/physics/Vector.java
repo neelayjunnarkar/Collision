@@ -111,7 +111,7 @@ public class Vector implements Cloneable {
     
     public Vector reject(Vector v2) {
         Vector projection = project(v2);
-        Vector rejection = new Vector(Math.sqrt(getMagnitude()*getMagnitude()-projection.getMagnitude()*projection.getMagnitude()), Math.PI/2.0-Math.acos(projection.getMagnitude()/getMagnitude()));
+        Vector rejection = Vector.subtract(this, projection);
         return rejection;
     }
     
