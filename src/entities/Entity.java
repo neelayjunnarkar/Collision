@@ -2,7 +2,6 @@ package entities;
 
 import physics.Axis;
 import physics.Vector;
-import physics.Force;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -16,26 +15,20 @@ import java.util.HashMap;
  */
 public class Entity {
     
-    private HashMap<String, Force> forces = new HashMap<>();
+    private HashMap<String, Vector> velocities = new HashMap<>();
     private Point2D.Double pos = new Point2D.Double();
     private Polygon2D shape;
     private Color color = new Color(0xEEEEEE);
     private Axis[] sepAxes;
     private double mass;
-
+    private Vector velocity = new Vector(new Point2D.Double(0, 0));
     public Vector getVelocity() {
         return velocity;
     }
+    public double getMass() { return mass; }
 
-    public HashMap<String, Force> getForces() {
-        return forces;
-    }
-
-    private Vector velocity;
-    private double slowDownDist = 0.01;
-    
     public Entity(Polygon2D shape) {
-        this(shape, new Point2D.Double(0 , 0), 0);
+        this(shape, new Point2D.Double(0 , 0), 1);
     }
     
     public Entity(Polygon2D shape, Point2D.Double pos, double mass) {
@@ -43,8 +36,16 @@ public class Entity {
         this.shape = shape;
         shape.setPos(pos);
         this.mass = mass;
-        velocity = new Vector();
         genSepAxes();
+    }
+    
+    public void addVelocity(String key, Vector velocity) {
+        if (velocities.get(key) != null) {
+            velocities.get(key).setAngle(velocity.getAngle());
+            velocities.get(key).setMagnitude(velocity.getMagnitude());
+            return;
+        }
+        velocities.put(key, velocity);
     }
 
     private void genSepAxes() {
@@ -79,34 +80,20 @@ public class Entity {
     }
 
     public Point2D.Double update(double delta) {
-        Vector totalVelocityDelta = new Vector();
-        for (Force force : forces.values()) {
-            Vector deltap = new Vector((force.getMass()/mass)*Math.sqrt(Math.pow(force.getAcceleration().getX(), 2.0) + Math.pow(force.getAcceleration().getY(), 2)),
-                    force.getAcceleration().getAngle());
-
-            totalVelocityDelta.add(deltap);//add x and y accelerations to totalVelocityDeta, a2 = (m1*a1)/m2, where m1 and a1 are of force, and a2 is being found for this entity
+        Vector totalVelocity = new Vector();
+        for (Vector velocity : velocities.values()) {
+            totalVelocity.add(velocity);
         }
 
-        velocity = Vector.add(velocity, totalVelocityDelta);
+        velocity = totalVelocity;
         //System.out.println(velocity.getX()+" "+velocity.getY());
         return move(delta * velocity.getX(), delta * velocity.getY());
     }
 
-    public void addConstantForce(String key, Force force) {
-        forces.put(key, force);
-    }
-    
-    public void addForce(Force force) {
-        Vector acceleration = new Vector((force.getMass()/mass)*Math.sqrt(Math.pow(force.getAcceleration().getX(), 2.0) + Math.pow(force.getAcceleration().getY(), 2.0)),
-                force.getAcceleration().getAngle());
-        
-        velocity = Vector.add(velocity, acceleration);
-        System.out.println(velocity.getX()+" "+velocity.getY());
 
-    }
 
-    public Force removeForce(String key) {
-        return forces.remove(key);
+    public Vector removeForce(String key) {
+        return velocities.remove(key);
     }
 
     private boolean inRange(double point, double[] range) {

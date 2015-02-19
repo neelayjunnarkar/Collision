@@ -103,16 +103,16 @@ public class Vector implements Cloneable {
     }
 
     public Vector project(Vector v2) {
+        if (v2.getMagnitude() == 0.0)
+            return v2.clone();
         double projX = (dot(this, v2)/(v2.getX()*v2.getX() + v2.getY()*v2.getY()))*v2.getX();
         double projY = (dot(this, v2)/(v2.getX()*v2.getX() + v2.getY()*v2.getY()))*v2.getY();
-        Vector projection = new Vector(Math.sqrt(projX*projX + projY*projY), Math.atan(projY/projX));
-        return projection;
+        return new Vector(Math.sqrt(projX*projX + projY*projY), Math.atan2(projY, projX));
     }
     
     public Vector reject(Vector v2) {
         Vector projection = project(v2);
-        Vector rejection = Vector.subtract(this, projection);
-        return rejection;
+        return Vector.subtract(this, projection);
     }
     
     @Override

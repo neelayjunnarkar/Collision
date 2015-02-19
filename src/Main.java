@@ -64,11 +64,13 @@ public class Main {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         entities.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}),
-                                              new Point2D.Double(100, 100), 100));
-        entities.get("asteroid 1").addForce(new Force(100, new Vector(100, 2.094)));
+                                              new Point2D.Double(0, 0), 100));
+        entities.get("asteroid 1").addVelocity("propellant", new Vector(100, Math.PI/4.0));
 
         entities.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0})));
         entities.get("asteroid 2").setPos(100, 100);
+        System.out.println(entities.get("asteroid 2").getVelocity() + " " + entities.get("asteroid 2").getMass());
+
 
 //        Vector axis = new Vector(1, Math.PI/6.0);
 //        Vector other = new Vector(1, Math.PI/3.0);
@@ -100,15 +102,28 @@ public class Main {
         }
     }
 
+    static boolean hit = false;
     public static void update(double nanoDelta) {
         double delta = nanoDelta / 1_000_000_000.0;
         for (Entity entity : entities.values()) {
             entity.update(delta);
         }
 
-        if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
-            Vector vec = entities.get("asteroid 1").getVelocity().reject(entities.get("asteroid 2").getVelocity());
+       if (entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))) {
+           hit = true;
+           
+           Vector rejection = entities.get("asteroid 1").getVelocity().reject(entities.get("asteroid 2").getVelocity());
+           double ma = entities.get("asteroid 1").getMass();
+           double vai = rejection.getMagnitude();
+           System.out.println(rejection);
+           double mb = entities.get("asteroid 2").getMass();
+           double vbi = entities.get("asteroid 2").getVelocity().getMagnitude();
 
-        }
+           double vaf = (ma*vai - mb*(vai-2*vbi)) / (ma + mb);
+           double vbf = (ma*vai + mb*vbi - ma*vaf) / (mb);
+           System.out.println(vai + " " + vbf);
+           entities.get("asteroid 1").addVelocity("rejection", new Vector(vaf-vai, Math.PI + rejection.getAngle()));
+           entities.get("asteroid 2").addVelocity("veocity", new Vector(vbf-vbi, rejection.getAngle()));
+       }
     }
 }
