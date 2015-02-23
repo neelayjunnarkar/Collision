@@ -9,8 +9,9 @@ import java.awt.geom.Point2D;
  * @author Tyler Packard
  */
 public class Vector implements Cloneable {
-    private Point2D.Double head = new Point2D.Double(0, 0);
-    
+    private double magnitude;
+    private double angle;
+
     public Vector() {}
 
     public Vector(double magnitude, double angle) {
@@ -19,59 +20,60 @@ public class Vector implements Cloneable {
     }
 
     public Vector(Point2D.Double head) {
-        this.head.setLocation(head.getX(), head.getY());
+        setX(head.getX());
+        setY(head.getY());
     }
 
     public Vector(Point2D.Double base, Point2D.Double head) {
-        this.head.x = head.getX() - base.getX();
-        this.head.y = head.getY() - base.getY();
+        setX(head.getX() - base.getX());
+        setY(head.getY() - base.getY());
     }
 
 
     public double getAngle() {
-        return Math.atan2(head.getY(), head.getX()) % (2 * Math.PI);
+        return angle;
     }
 
     public void setAngle(double angle) {
-        double cos = Math.cos(angle);
-        double sin = Math.sin(angle);
-        double x = head.x;
-        double y = head.y;
-        head.x = x * cos - y * sin;
-        head.y = y * cos + x * sin;
+        this.angle = angle;
     }
 
     public void rotate(double angle) {
-        setAngle(getAngle() + angle);
+        this.angle += angle;
     }
 
     public double getMagnitude() {
-        return head.distance(0, 0);
+        return magnitude;
     }
     
     public void setMagnitude(double magnitude) {
-        head.setLocation(magnitude * Math.cos(getAngle()), magnitude * Math.sin(getAngle()));
+        this.magnitude = magnitude;
     }
 
     public double getX() {
-        return head.getX();
+        return magnitude * Math.cos(angle);
     }
 
     public void setX(double x) {
-        head.x = x;
+        double y = getY();
+        magnitude = Math.sqrt(x*x + y*y);
+        angle = Math.atan2(y, x);
     }
 
     public double getY() {
-        return head.getY();
+        return magnitude * Math.sin(angle);
     }
 
     public void setY(double y) {
-        head.y = y;
+        double x = getX();
+        magnitude = Math.sqrt(x*x + y*y);
+        angle = Math.atan2(y, x);
     }
 
     public void add(Vector v) {
-        head.x += v.getX();
-        head.y += v.getY();
+        Point2D.Double head = new Point2D.Double();
+        setX(getX() + v.getX());
+        setY(head.y = getY() + v.getY());
     }
 
     public static Vector add(Vector v1, Vector v2) {
@@ -81,8 +83,9 @@ public class Vector implements Cloneable {
     }
 
     public void subtract(Vector v) {
-        head.x -= v.getX();
-        head.y -= v.getY();
+        Point2D.Double head = new Point2D.Double();
+        setX(getX() - v.getX());
+        setY(getY() - v.getY());
     }
 
     public static Vector subtract(Vector v1, Vector v2) {
@@ -96,30 +99,30 @@ public class Vector implements Cloneable {
     }
 
     public void normalize() {
-        head.x /= getMagnitude();
-        head.y /= getMagnitude();
+        setX(getX() / getMagnitude());
+        setY(getY() / getMagnitude());
     }
 
     public Vector normal() {
         Vector normal = new Vector();
-        normal.setX(-head.getY());
-        normal.setY(head.getX());
+        normal.setX(-getY());
+        normal.setY(getX());
         return normal;
     }
 
-    public Vector project(Vector v2) {
-        if (v2.getMagnitude() == 0.0)
-            return v2.clone();
-        double projX = (dot(this, v2)/(v2.getX()*v2.getX() + v2.getY()*v2.getY()))*v2.getX();
-        double projY = (dot(this, v2)/(v2.getX()*v2.getX() + v2.getY()*v2.getY()))*v2.getY();
+    public Vector project(Vector v) {
+        if (v.getMagnitude() == 0.0)
+            return v.clone();
+        double projX = (dot(this, v)/(v.getX()*v.getX() + v.getY()*v.getY()))*v.getX();
+        double projY = (dot(this, v)/(v.getX()*v.getX() + v.getY()*v.getY()))*v.getY();
         return new Vector(Math.sqrt(projX*projX + projY*projY), Math.atan2(projY, projX));
     }
     
-    public Vector reject(Vector v2) {
-        Vector projection = project(v2);
+    public Vector reject(Vector v) {
+        Vector projection = project(v);
         return Vector.subtract(this, projection);
     }
-    
+
     @Override
     public Vector clone() {
         return new Vector(new Point2D.Double(getX(), getY()));
@@ -127,6 +130,6 @@ public class Vector implements Cloneable {
 
     @Override
     public String toString() {
-        return "<" + head.getX() + ", " + head.getY() + ">";
+        return "<" + getX() + ", " + getY() + ">";
     }
 }
