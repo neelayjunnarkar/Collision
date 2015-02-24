@@ -92,7 +92,7 @@ public class Entity {
 
 
 
-    public Vector removeForce(String key) {
+    public Vector removeVelocity(String key) {
         return velocities.remove(key);
     }
 

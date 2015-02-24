@@ -75,7 +75,17 @@ public class Main {
         if ((overlapSide = entities.get("asteroid 1").overlaps(entities.get("asteroid 2"))).length == 2) {
             hit = true;
 
-            Vector rejection = entities.get("asteroid 1").getVelocity().reject(entities.get("asteroid 2").getVelocity());
+            Point2D.Double a1 = new Point2D.Double(overlapSide[0].getX()+entities.get("asteroid 2").getPos().getX(), overlapSide[0].getY()+entities.get("asteroid 2").getPos().getY());
+            Point2D.Double a2 = new Point2D.Double(overlapSide[1].getX()+entities.get("asteroid 2").getPos().getX(), overlapSide[1].getY()+entities.get("asteroid 2").getPos().getY());
+            System.out.println("points: "+a1+"   "+a2);
+            
+            //make vector
+            double magnitude = a1.distance(a2);
+            double angle = Math.atan2(a1.getY()-a2.getY(), a1.getX()-a2.getX());
+            Vector torejecton = new Vector(magnitude, angle);
+            System.out.println("ang: "+torejecton.getAngle()*180.0/Math.PI+"   mag: "+torejecton.getMagnitude());
+            
+            Vector rejection = entities.get("asteroid 1").getVelocity().reject(torejecton);
             double ma = entities.get("asteroid 1").getMass();
             double vai = rejection.getMagnitude();
             System.out.println(rejection);
@@ -90,16 +100,16 @@ public class Main {
         }
 
         if (keyboard.keyDown("D")) {
-            entities.get("SPACESHIP!").addVelocity("key left", new Vector(100, 0));
+            entities.get("SPACESHIP!").addVelocity("key", new Vector(100, 0));
         }
         if (keyboard.keyDown("S")) {
-            entities.get("SPACESHIP!").addVelocity("key down", new Vector(100, Math.PI * 0.5));
+            entities.get("SPACESHIP!").addVelocity("key", new Vector(100, Math.PI * 0.5));
         }
         if (keyboard.keyDown("A")) {
-            entities.get("SPACESHIP!").addVelocity("key right", new Vector(100, Math.PI));
+            entities.get("SPACESHIP!").addVelocity("key", new Vector(100, Math.PI));
         }
         if (keyboard.keyDown("W")) {
-            entities.get("SPACESHIP!").addVelocity("key up", new Vector(100, Math.PI * 1.5));
+            entities.get("SPACESHIP!").addVelocity("key", new Vector(100, Math.PI * 1.5));
         }
     }
 }
