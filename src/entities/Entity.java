@@ -96,7 +96,7 @@ public class Entity {
         return velocities.remove(key);
     }
 
-    private boolean inRange(double point, double[] range) {
+    private double inRange(double point, double[] range) {
         double min = range[0];
         double max = range[1];
         if (max < min) {
@@ -104,29 +104,48 @@ public class Entity {
             max = range[0];
         }
 
-        return (point >= min && point <= max);
+        double upperOverlap = max - point;
+        double underOverlap = point - min;
+
+        if (upperOverlap >= 0 && underOverlap >= 0) {
+            return Math.min(upperOverlap, underOverlap);
+        } else {
+            return -1;
+        }
     }
 
-    private boolean projectionOverlaps(double[] projectionA, double[] projectionB) {
-        if (inRange(projectionA[0], projectionB)) return true;
-        if (inRange(projectionA[1], projectionB)) return true;
-        if (inRange(projectionB[0], projectionA)) return true;
-        if (inRange(projectionB[1], projectionA)) return true;
-        return false;
+    private double projectionOverlaps(double[] projectionA, double[] projectionB) {
+        double minOverlap;
+        if ((minOverlap = inRange(projectionA[0], projectionB)) != -1) return minOverlap;
+        if ((minOverlap = inRange(projectionA[1], projectionB)) != -1) return minOverlap;
+        if ((minOverlap = inRange(projectionB[0], projectionA)) != -1) return minOverlap;
+        if ((minOverlap = inRange(projectionB[1], projectionA)) != -1) return minOverlap;
+        return -1;
     }
 
-    public boolean overlaps(Entity other) {
+    public Point2D.Double[] overlaps(Entity other) {
+        double minOverlap = Double.MAX_VALUE;
+        int minAxisIndex = 0;
+
         for (Axis axis : sepAxes) {
             double[] thisProjection = axis.projection(shape);
             double[] otherProjection = axis.projection(other.shape);
-            if (!projectionOverlaps(thisProjection, otherProjection)) return false;
+            if (projectionOverlaps(thisProjection, otherProjection) == -1) return new Point2D.Double[]{};
         }
-        for (Axis axis : other.sepAxes) {
-            double[] thisProjection = axis.projection(shape);
-            double[] otherProjection = axis.projection(other.shape);
-            if (!projectionOverlaps(thisProjection, otherProjection)) return false;
+        for (int i = 0; i < other.sepAxes.length; i++) {
+            double[] thisProjection = other.sepAxes[i].projection(shape);
+            double[] otherProjection = other.sepAxes[i].projection(other.shape);
+
+            double overlap = projectionOverlaps(thisProjection, otherProjection);
+            if (overlap == -1) return new Point2D.Double[]{};
+            else if (overlap < minOverlap) {
+                minOverlap = overlap;
+                minAxisIndex = i;
+            }
         }
-        return true;
+
+        Point2D.Double[] vertices = other.shape.getVertices();
+        return new Point2D.Double[]{vertices[minAxisIndex], vertices[(minAxisIndex+1) % vertices.length]};
     }
 
     public void draw(Graphics2D g2d) {

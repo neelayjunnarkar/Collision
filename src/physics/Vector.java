@@ -55,9 +55,7 @@ public class Vector implements Cloneable {
     }
 
     public void setX(double x) {
-        double y = getY();
-        magnitude = Math.sqrt(x*x + y*y);
-        angle = Math.atan2(y, x);
+        setHead(x, getY());
     }
 
     public double getY() {
@@ -65,7 +63,14 @@ public class Vector implements Cloneable {
     }
 
     public void setY(double y) {
-        double x = getX();
+        setHead(getX(), y);
+    }
+
+    public Point2D.Double getHead() {
+        return new Point2D.Double(getX(), getY());
+    }
+
+    public void setHead(double x, double y) {
         magnitude = Math.sqrt(x*x + y*y);
         angle = Math.atan2(y, x);
     }
