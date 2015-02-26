@@ -39,14 +39,14 @@ public class Main {
         WINDOW.setLocationRelativeTo(null);
         WINDOW.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        ENTITIES.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 20, 20, 0}),
-                new Point2D.Double(0, 0), 100));
-        ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(2, Math.PI / 4));
+        ENTITIES.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 30, 30, 0}),
+                                              new Point2D.Double(0, 0), 100));
+        ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(100, Math.PI / 4.0));
 
-        ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0})));
-        ENTITIES.get("asteroid 2").setPos(100, 100);
+        ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{30, 30, 0, 0}, new double[]{0, 30, 30, 0}), new Point2D.Double(80, 100), 100));
+        ENTITIES.get("asteroid 2").addVelocity("init", new Vector(-100, Math.PI/4.0));
 
-        ENTITIES.put("SPACESHIP!", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{20, 20, 0})));
+        ENTITIES.put("SPACESHIP!", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{10, 10, 0})));
 
         double prevTime = System.nanoTime();
         while (true) {
@@ -54,6 +54,8 @@ public class Main {
 
             update();
             PANEL.repaint(ENTITIES.values().toArray(new Entity[ENTITIES.size()]));
+
+            prevTime = curTime;
 
             try {
                 Thread.sleep(Math.round((updateTime - System.nanoTime() + start) / 1_000_000));
@@ -71,7 +73,7 @@ public class Main {
         }
 
         Point2D.Double[] overlapSide = ENTITIES.get("asteroid 1").overlaps(ENTITIES.get("asteroid 2"));
-        if (overlapSide.length == 2) {
+        if (!hit && overlapSide.length == 2) {
             hit = true;
 
             Point2D.Double a1 = new Point2D.Double(overlapSide[0].getX()+ENTITIES.get("asteroid 2").getPos().getX(), overlapSide[0].getY()+ENTITIES.get("asteroid 2").getPos().getY());
@@ -85,15 +87,21 @@ public class Main {
             System.out.println("ang: "+torejecton.getAngle()*180.0/Math.PI+"   mag: "+torejecton.getMagnitude());
             
             Vector rejection = ENTITIES.get("asteroid 1").getVelocity().reject(torejecton);
+            if (rejection.getAngle() >= Math.PI) {
+                rejection.setAngle(rejection.getAngle()-Math.PI);
+                rejection.setMagnitude(0-rejection.getMagnitude());
+            }
             double ma = ENTITIES.get("asteroid 1").getMass();
             double vai = rejection.getMagnitude();
+
             double mb = ENTITIES.get("asteroid 2").getMass();
             double vbi = ENTITIES.get("asteroid 2").getVelocity().getMagnitude();
 
             double vaf = (ma*vai - mb*(vai-2*vbi)) / (ma + mb);
             double vbf = (ma*vai + mb*vbi - ma*vaf) / (mb);
-            ENTITIES.get("asteroid 1").addVelocity("rejection", new Vector(vaf-vai, Math.PI + rejection.getAngle()));
-            ENTITIES.get("asteroid 2").addVelocity("velocity", new Vector(vbf-vbi, rejection.getAngle()));
+            System.out.println("final velocitites: "+(vaf-vai) + " " + (vbf-vbi));
+            ENTITIES.get("asteroid 1").addVelocity("rejection", new Vector(vaf-vai, rejection.getAngle()));
+            ENTITIES.get("asteroid 2").addVelocity("veocity", new Vector(vbf-vbi, rejection.getAngle()));
         }
 
         if (KEYBOARD.keyDown("D")) {
@@ -118,3 +126,4 @@ public class Main {
         }
     }
 }
+
