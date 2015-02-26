@@ -79,15 +79,14 @@ public class Entity {
         return (Point2D.Double)pos.clone();
     }
 
-    public Point2D.Double update(double delta) {
+    public Point2D.Double update() {
         Vector totalVelocity = new Vector();
         for (Vector velocity : velocities.values()) {
             totalVelocity.add(velocity);
         }
 
         velocity = totalVelocity;
-        //System.out.println(velocity.getX()+" "+velocity.getY());
-        return move(delta * velocity.getX(), delta * velocity.getY());
+        return move(velocity.getX(), velocity.getY());
     }
 
 
