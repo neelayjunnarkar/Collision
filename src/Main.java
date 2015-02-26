@@ -40,22 +40,22 @@ public class Main {
         WINDOW.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ENTITIES.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 30, 30, 0}),
-                                              new Point2D.Double(0, 0), 100));
-        ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(100, Math.PI / 4.0));
+                                              new Point2D.Double(10, 0), 100));
+        ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(2, Math.PI / 4.0));
 
         ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{30, 30, 0, 0}, new double[]{0, 30, 30, 0}), new Point2D.Double(80, 100), 100));
-        ENTITIES.get("asteroid 2").addVelocity("init", new Vector(-100, Math.PI/4.0));
+        ENTITIES.get("asteroid 2").addVelocity("init", new Vector(-2, Math.PI/4.0));
+
 
         ENTITIES.put("SPACESHIP!", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{10, 10, 0})));
 
-        double prevTime = System.nanoTime();
+
         while (true) {
             long start = System.nanoTime();
 
             update();
             PANEL.repaint(ENTITIES.values().toArray(new Entity[ENTITIES.size()]));
 
-            prevTime = curTime;
 
             try {
                 Thread.sleep(Math.round((updateTime - System.nanoTime() + start) / 1_000_000));
@@ -99,7 +99,7 @@ public class Main {
 
             double vaf = (ma*vai - mb*(vai-2*vbi)) / (ma + mb);
             double vbf = (ma*vai + mb*vbi - ma*vaf) / (mb);
-            System.out.println("final velocitites: "+(vaf-vai) + " " + (vbf-vbi));
+            System.out.println("final velocitites: " + (vaf - vai) + " " + (vbf - vbi));
             ENTITIES.get("asteroid 1").addVelocity("rejection", new Vector(vaf-vai, rejection.getAngle()));
             ENTITIES.get("asteroid 2").addVelocity("veocity", new Vector(vbf-vbi, rejection.getAngle()));
         }
