@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 
 /**
  * A 2D Vector in rectangular form.
- *
+ * 26 methods
  * @author Neelay Junnarkar
  * @author Tyler Packard
  */

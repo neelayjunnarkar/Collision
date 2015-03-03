@@ -144,7 +144,7 @@ public class Entity {
         }
 
         Point2D.Double[] vertices = other.shape.getVertices();
-        return new Point2D.Double[]{vertices[minAxisIndex], vertices[(minAxisIndex+1) % vertices.length]};
+        return new Point2D.Double[]{vertices[minAxisIndex], vertices[(minAxisIndex-1+vertices.length) % vertices.length]};
     }
 
     public void draw(Graphics2D g2d) {

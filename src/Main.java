@@ -18,6 +18,7 @@ import java.util.*;
  * ░░▒▒▓▓██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▓▓▒▒░░
  * A pro space simulator.
  *
+ * 2 methods
  * @author Tyler Packard
  * @author Neelay Junnarkar
  */
@@ -40,11 +41,11 @@ public class Main {
         WINDOW.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ENTITIES.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 30, 30, 0}),
-                                              new Point2D.Double(10, 0), 100));
-        ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(2, Math.PI / 4.0));
+                                              new Point2D.Double(0, 0), 100));
+        ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(2, Math.PI/4.0));
 
         ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{30, 30, 0, 0}, new double[]{0, 30, 30, 0}), new Point2D.Double(80, 100), 100));
-        ENTITIES.get("asteroid 2").addVelocity("init", new Vector(-2, Math.PI/4.0));
+        //ENTITIES.get("asteroid 2").addVelocity("init", new Vector(2, 0));
 
 
         ENTITIES.put("SPACESHIP!", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{10, 10, 0})));
@@ -87,10 +88,17 @@ public class Main {
             System.out.println("ang: "+torejecton.getAngle()*180.0/Math.PI+"   mag: "+torejecton.getMagnitude());
             
             Vector rejection = ENTITIES.get("asteroid 1").getVelocity().reject(torejecton);
-            if (rejection.getAngle() >= Math.PI) {
+            System.out.println("rejection preangle: "+rejection.getAngle()+"  premag: "+rejection.getMagnitude());
+            if (rejection.getAngle() >= Math.PI ) {
                 rejection.setAngle(rejection.getAngle()-Math.PI);
-                rejection.setMagnitude(0-rejection.getMagnitude());
+                rejection.setMagnitude(-rejection.getMagnitude());
             }
+            if (rejection.getAngle() < 0) {
+                rejection.setAngle(rejection.getAngle()+Math.PI);
+                rejection.setMagnitude(-rejection.getMagnitude());
+            }
+            System.out.println("rejection postangle: "+rejection.getAngle()+"  postmag: "+rejection.getMagnitude());
+
             double ma = ENTITIES.get("asteroid 1").getMass();
             double vai = rejection.getMagnitude();
 

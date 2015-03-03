@@ -4,7 +4,7 @@ import entities.Entity;
 
 import javax.swing.*;
 import java.awt.*;
-
+ //3 methods
 public class Panel extends JPanel {
     private Entity[] toDraw = {};
 

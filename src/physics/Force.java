@@ -1,5 +1,5 @@
 package physics;
-
+ //6 methods
 public class Force implements Cloneable {
     private double mass;
     private Vector acceleration;
