@@ -18,7 +18,6 @@ import java.util.*;
  * ░░▒▒▓▓██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▓▓▒▒░░
  * A pro space simulator.
  *
- * 2 methods
  * @author Tyler Packard
  * @author Neelay Junnarkar
  */
@@ -41,22 +40,19 @@ public class Main {
         WINDOW.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ENTITIES.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 30, 30, 0}),
-                                              new Point2D.Double(0, 0), 100));
+                                              new Point2D.Double(0, 0), 100, true));
         ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(2, Math.PI/4.0));
 
-        ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{30, 30, 0, 0}, new double[]{0, 30, 30, 0}), new Point2D.Double(80, 100), 100));
+        ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{30, 30, 0, 0}, new double[]{0, 30, 30, 0}), new Point2D.Double(80, 100), 100, true));
         //ENTITIES.get("asteroid 2").addVelocity("init", new Vector(2, 0));
 
-
         ENTITIES.put("SPACESHIP!", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{10, 10, 0})));
-
 
         while (true) {
             long start = System.nanoTime();
 
             update();
             PANEL.repaint(ENTITIES.values().toArray(new Entity[ENTITIES.size()]));
-
 
             try {
                 Thread.sleep(Math.round((updateTime - System.nanoTime() + start) / 1_000_000));
@@ -72,6 +68,8 @@ public class Main {
         for (Entity entity : ENTITIES.values()) {
             entity.update();
         }
+
+        ENTITIES.get("SPACESHIP!").rotate(0.1);
 
         Point2D.Double[] overlapSide = ENTITIES.get("asteroid 1").overlaps(ENTITIES.get("asteroid 2"));
         if (!hit && overlapSide.length == 2) {

@@ -17,7 +17,6 @@ public class Keyboard {
         @Override
         public void keyPressed(KeyEvent e) {
             String key = KeyEvent.getKeyText(e.getKeyCode());
-            System.out.println(key);
             if (!keys.containsKey(key) || keys.get(key) == 0) keys.put(key, System.nanoTime());
         }
 

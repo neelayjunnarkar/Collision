@@ -28,15 +28,16 @@ public class Entity {
     public double getMass() { return mass; }
 
     public Entity(Polygon2D shape) {
-        this(shape, new Point2D.Double(0 , 0), 1);
+        this(shape, new Point2D.Double(0 , 0), 1, true);
     }
     
-    public Entity(Polygon2D shape, Point2D.Double pos, double mass) {
+    public Entity(Polygon2D shape, Point2D.Double pos, double mass, boolean centerPoints) {
         this.pos = pos;
         this.shape = shape;
         shape.setPos(pos);
         this.mass = mass;
         genSepAxes();
+        shape.centerPoints();
     }
     
     public void addVelocity(String key, Vector velocity) {
@@ -79,6 +80,10 @@ public class Entity {
         return (Point2D.Double)pos.clone();
     }
 
+    public void rotate(double radians) {
+        shape.rotate(radians);
+    }
+
     public Point2D.Double update() {
         Vector totalVelocity = new Vector();
         for (Vector velocity : velocities.values()) {
@@ -88,8 +93,6 @@ public class Entity {
         velocity = totalVelocity;
         return move(velocity.getX(), velocity.getY());
     }
-
-
 
     public Vector removeVelocity(String key) {
         return velocities.remove(key);
