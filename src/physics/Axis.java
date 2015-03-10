@@ -6,7 +6,7 @@ import java.awt.geom.Point2D;
 
 /**
  * Represents an axis onto which a polygon is projected.
- * 2 methods
+ *
  * @author Tyler Packard
  */
 public class Axis {

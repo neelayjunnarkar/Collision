@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * An object that records keyboard input. When a key is pressed, the key is mapped to the time it was pressed in
  * nanoseconds. When a key is released, it is mapped to 0.
- * 5 methods
+ *
  * @author Tyler Packard
  */
 public class Keyboard {

@@ -31,6 +31,8 @@ public class Main {
 
     public final static double updateTime = 1_000_000_000 / 60.0;
 
+    public static Point2D.Double[] SIDE = {new Point2D.Double(0, 0), new Point2D.Double(0, 0)};
+
     public static void main(String[] args) {
         WINDOW.add(PANEL);
         WINDOW.pack();
@@ -40,11 +42,11 @@ public class Main {
         WINDOW.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ENTITIES.put("asteroid 1", new Entity(new Polygon2D(new double[]{0, 0, 30, 30}, new double[]{0, 30, 30, 0}),
-                                              new Point2D.Double(0, 0), 100, true));
+                                              new Point2D.Double(0, 00), 100, true));
         ENTITIES.get("asteroid 1").addVelocity("MATH.PI OVER FOR", new Vector(2, Math.PI/4.0));
 
-        ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{30, 30, 0, 0}, new double[]{0, 30, 30, 0}), new Point2D.Double(80, 100), 100, true));
-        //ENTITIES.get("asteroid 2").addVelocity("init", new Vector(2, 0));
+        ENTITIES.put("asteroid 2", new Entity(new Polygon2D(new double[]{30, 30, 0, 0}, new double[]{0, 30, 30, 0}), new Point2D.Double(200, 100), 100, true));
+        ENTITIES.get("asteroid 2").addVelocity("init", new Vector(-2, 0));
 
         ENTITIES.put("SPACESHIP!", new Entity(new Polygon2D(new double[]{0, 30, 30}, new double[]{10, 10, 0})));
 
@@ -52,10 +54,10 @@ public class Main {
             long start = System.nanoTime();
 
             update();
-            PANEL.repaint(ENTITIES.values().toArray(new Entity[ENTITIES.size()]));
+            PANEL.repaint(ENTITIES.values().toArray(new Entity[ENTITIES.size()]), SIDE);
 
             try {
-                Thread.sleep(Math.round((updateTime - System.nanoTime() + start) / 1_000_000));
+                Thread.sleep(Math.max(Math.round((updateTime - System.nanoTime() + start) / 1_000_000), 0));
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 break;
@@ -73,6 +75,13 @@ public class Main {
 
         Point2D.Double[] overlapSide = ENTITIES.get("asteroid 1").overlaps(ENTITIES.get("asteroid 2"));
         if (!hit && overlapSide.length == 2) {
+            System.out.println(Arrays.toString(SIDE));
+            SIDE[0].x = ENTITIES.get("asteroid 2").getPos().getX() + overlapSide[0].x;
+            SIDE[1].x = ENTITIES.get("asteroid 2").getPos().getX() + overlapSide[1].x;
+            SIDE[0].y = ENTITIES.get("asteroid 2").getPos().getY() + overlapSide[0].y;
+            SIDE[1].y = ENTITIES.get("asteroid 2").getPos().getY() + overlapSide[1].y;
+            System.out.println(Arrays.toString(SIDE) + "\n");
+
             hit = true;
 
             Point2D.Double a1 = new Point2D.Double(overlapSide[0].getX()+ENTITIES.get("asteroid 2").getPos().getX(), overlapSide[0].getY()+ENTITIES.get("asteroid 2").getPos().getY());

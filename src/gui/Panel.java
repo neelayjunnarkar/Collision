@@ -4,9 +4,11 @@ import entities.Entity;
 
 import javax.swing.*;
 import java.awt.*;
- //3 methods
+import java.awt.geom.Point2D;
+
 public class Panel extends JPanel {
     private Entity[] toDraw = {};
+    private Point2D.Double[] SIDE;
 
 
     public Panel(int width, int height) {
@@ -16,8 +18,9 @@ public class Panel extends JPanel {
         setBackground(new Color(0x14181A));
     }
 
-    public void repaint(Entity[] entities) {
+    public void repaint(Entity[] entities, Point2D.Double[] SIDE) {
         toDraw = entities;
+        this.SIDE = SIDE;
         super.repaint();
     }
 
@@ -30,5 +33,10 @@ public class Panel extends JPanel {
         for (Entity entity : toDraw) {
             entity.draw(g2d);
         }
+
+        try {
+            g2d.setColor(new Color(0x44DD77));
+            g2d.drawLine((int) SIDE[0].x, (int) SIDE[0].y, (int) SIDE[1].x, (int) SIDE[1].y);
+        } catch (Exception e) {}
     }
 }

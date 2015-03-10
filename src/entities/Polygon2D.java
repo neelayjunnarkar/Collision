@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 
 /**
  * A polygon with double coordinates. Points must be added in counter-clockwise order.
- * 9 methods
+ *
  * @author Neelay Junnarkar
  * @author Tyler Packard
  */

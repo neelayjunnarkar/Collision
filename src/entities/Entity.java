@@ -62,7 +62,7 @@ public class Entity {
     }
 
     public Point2D.Double getPos() {
-        return (Point2D.Double)pos.clone();
+        return (Point2D.Double) pos.clone();
     }
 
     public void setPos(Point2D.Double pt) {
@@ -108,8 +108,10 @@ public class Entity {
 
         double upperOverlap = max - point;
         double underOverlap = point - min;
+        double overlap = Math.min(upperOverlap, underOverlap);
 
-        if (upperOverlap >= 0 && underOverlap >= 0) {
+        if (overlap > 0) System.out.println("Overlap: " + overlap);
+        if (upperOverlap >= 0 && underOverlap >= 0/* && overlap > 0.000_000_000_1*/) {
             return Math.min(upperOverlap, underOverlap);
         } else {
             return -1;
@@ -139,15 +141,20 @@ public class Entity {
             double[] otherProjection = other.sepAxes[i].projection(other.shape);
 
             double overlap = projectionOverlaps(thisProjection, otherProjection);
+            System.out.println(overlap);
             if (overlap == -1) return new Point2D.Double[]{};
-            else if (overlap < minOverlap) {
+            else if (overlap <= minOverlap && overlap > 0.000_000_000_1) {
                 minOverlap = overlap;
                 minAxisIndex = i;
             }
         }
 
+        System.out.println(minOverlap);
         Point2D.Double[] vertices = other.shape.getVertices();
-        return new Point2D.Double[]{vertices[minAxisIndex], vertices[(minAxisIndex-1+vertices.length) % vertices.length]};
+        return new Point2D.Double[]{
+                (Point2D.Double) vertices[minAxisIndex].clone(),
+                (Point2D.Double) vertices[(minAxisIndex+1+vertices.length) % vertices.length].clone()
+        };
     }
 
     public void draw(Graphics2D g2d) {
